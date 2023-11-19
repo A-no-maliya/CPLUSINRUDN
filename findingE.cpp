@@ -6,37 +6,21 @@
 
 using namespace std;
 
-// Метод итераций (метод неподвижной точки)
+// РњРµС‚РѕРґ РёС‚РµСЂР°С†РёР№ (РјРµС‚РѕРґ РЅРµРїРѕРґРІРёР¶РЅРѕР№ С‚РѕС‡РєРё)
 #include <cmath>
 
-/*double fixed_point_iteration(double M, double e, double epsilon = 1e-6)
+double fixed_point_iteration(double M, double e, double epsilon = 1e-6)
 {
     double E = M;
     double E_next;
 
-    for (int i = 0; i <= 30; i++)       //цикл для поиска кол-ва действий с вводными данными
+    for (int i = 0; i <= 30; i++)       //С†РёРєР» РґР»СЏ РїРѕРёСЃРєР° РєРѕР»-РІР° РґРµР№СЃС‚РІРёР№ СЃ РІРІРѕРґРЅС‹РјРё РґР°РЅРЅС‹РјРё
     {
-        E_next = e * sin(E) + M;   // Обновляем значение E
+        E_next = e * sin(E) + M;   // РћР±РЅРѕРІР»СЏРµРј Р·РЅР°С‡РµРЅРёРµ E
         if (fabs(E_next - E) < epsilon)
             return E_next;
    
-        E = E_next; // Вычисляем новое значение E_next
-    }
-
-    return 0;
-}*/
-double fixed_point_iteration(double e, double M, double epsilon = 1e-6) {
-
-    double Ek1, Ek = M;
-
-    for (int i{ 0 }; i < 50; i++) {
-
-        Ek1 = e * sin(Ek) + M;
-
-        if (abs(Ek1 - Ek) < epsilon)
-            return Ek1;
-
-        Ek = Ek1;
+        E = E_next; // Р’С‹С‡РёСЃР»СЏРµРј РЅРѕРІРѕРµ Р·РЅР°С‡РµРЅРёРµ E_next
     }
 
     return 0;
@@ -44,23 +28,23 @@ double fixed_point_iteration(double e, double M, double epsilon = 1e-6) {
 
 double bisection_method(double M, double e, double epsilon = 1e-6)
 {
-    double x = -M; // Любое отрицательное значение
-    double y = M;  // Любое положительное значение
+    double x = M - 5; // Р›СЋР±РѕРµ РѕС‚СЂРёС†Р°С‚РµР»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ
+    double y = M + 5;  // Р›СЋР±РѕРµ РїРѕР»РѕР¶РёС‚РµР»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ
     double z = 0;
 
-    for (int i = 0; i <= 30; i++)
+    for (int i = 0; i <= 100; i++)
     {
-        z = (x + y) / 2; // Вычисляем новую середину отрезка
-        if (fabs(y - x) <= 2 * epsilon)
+        z = (x + y) / 2; // Р’С‹С‡РёСЃР»СЏРµРј РЅРѕРІСѓСЋ СЃРµСЂРµРґРёРЅСѓ РѕС‚СЂРµР·РєР°
+        if (fabs(y - x) < (2 * epsilon))
             return z;
 
-        if ((x - e * sin(x) - M) * (y - e * sin(y) - M) < 0)
+        if (((x - e * sin(x) - M) * (y - e * sin(y) - M)) < 0)
         {
-            y = z; // Обновляем правую границу отрезка
+            y = z; // РћР±РЅРѕРІР»СЏРµРј РїСЂР°РІСѓСЋ РіСЂР°РЅРёС†Сѓ РѕС‚СЂРµР·РєР°
         }
         else
         {
-            x = z; // Обновляем левую границу отрезка
+            x = z; // РћР±РЅРѕРІР»СЏРµРј Р»РµРІСѓСЋ РіСЂР°РЅРёС†Сѓ РѕС‚СЂРµР·РєР°
         }
     }
 
@@ -69,24 +53,24 @@ double bisection_method(double M, double e, double epsilon = 1e-6)
 
 double golden_section_method(double M, double e, double epsilon = 1e-6)
 {
-    double x = -M; // Любое отрицательное значение
-    double y = M; // Любое положительное значение
+    double x = M - 5; // Р›СЋР±РѕРµ РѕС‚СЂРёС†Р°С‚РµР»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ
+    double y = M + 5; // Р›СЋР±РѕРµ РїРѕР»РѕР¶РёС‚РµР»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ
     double z = 0;
-    double phi = (sqrt(5) + 1) / 2; // Золотое сечение
+    double phi = (sqrt(5) + 1) / 2; // Р—РѕР»РѕС‚РѕРµ СЃРµС‡РµРЅРёРµ
 
     for (int i = 0; i <= 30; i++)
     {
-        z = x + (y - x) / phi; // Вычисляем новую середину отрезка
-        if (fabs(y - x) <= 2 * epsilon)
+        z = x + (y - x) / phi; // Р’С‹С‡РёСЃР»СЏРµРј РЅРѕРІСѓСЋ СЃРµСЂРµРґРёРЅСѓ РѕС‚СЂРµР·РєР°
+        if (fabs(y - x) < 2 * epsilon)
         
 
         if ((x - e * sin(x) - M) * (y - e * sin(y) - M) < 0)
         {
-            y = z; // Обновляем правую границу отрезка
+            y = z; // РћР±РЅРѕРІР»СЏРµРј РїСЂР°РІСѓСЋ РіСЂР°РЅРёС†Сѓ РѕС‚СЂРµР·РєР°
         }
         else
         {
-            x = z; // Обновляем левую границу отрезка
+            x = z; // РћР±РЅРѕРІР»СЏРµРј Р»РµРІСѓСЋ РіСЂР°РЅРёС†Сѓ РѕС‚СЂРµР·РєР°
         }
     }
 
@@ -95,16 +79,16 @@ double golden_section_method(double M, double e, double epsilon = 1e-6)
 
 double newton_method(double M, double e, double epsilon = 1e-6)
 {
-    double E = M; // Начальное приближение для E
+    double E = M; // РќР°С‡Р°Р»СЊРЅРѕРµ РїСЂРёР±Р»РёР¶РµРЅРёРµ РґР»СЏ E
 
     for (int i = 0; i < 40; i++)
     {
-        double f = E - e*sin(E) - M; // Значение функции
-        double f_prime = 1 + e*cos(E); // Значение производной функции
+        double f = E - e*sin(E) - M; // Р—РЅР°С‡РµРЅРёРµ С„СѓРЅРєС†РёРё
+        double f_prime = 1 + e*cos(E); // Р—РЅР°С‡РµРЅРёРµ РїСЂРѕРёР·РІРѕРґРЅРѕР№ С„СѓРЅРєС†РёРё
 
-        E -= f / f_prime; // Вычисление следующего приближения для E
+        E -= f / f_prime; // Р’С‹С‡РёСЃР»РµРЅРёРµ СЃР»РµРґСѓСЋС‰РµРіРѕ РїСЂРёР±Р»РёР¶РµРЅРёСЏ РґР»СЏ E
 
-        if (abs(f) < epsilon) // Проверка условия сходимости
+        if (abs(f) < epsilon) // РџСЂРѕРІРµСЂРєР° СѓСЃР»РѕРІРёСЏ СЃС…РѕРґРёРјРѕСЃС‚Рё
         {
             break;
         }
@@ -115,18 +99,41 @@ double newton_method(double M, double e, double epsilon = 1e-6)
 
 int main()
 {   
-    double T = 9015;                        // период обращения КА в секундах
-    double r_a = 1017000;                   // м радиус апоцентра
-    double r_p = 350000;                    // м радиус перицентра 
+    double T = 9015;                        // РїРµСЂРёРѕРґ РѕР±СЂР°С‰РµРЅРёСЏ РљРђ РІ СЃРµРєСѓРЅРґР°С…
+    double r_a = 1017000;                   // Рј СЂР°РґРёСѓСЃ Р°РїРѕС†РµРЅС‚СЂР°
+    double r_p = 350000;                    // Рј СЂР°РґРёСѓСЃ РїРµСЂРёС†РµРЅС‚СЂР° 
                        
-    double n = 2 * PI / T;                 // средняя угловая скорость
-    double a = (r_a + r_p) / 2;              // большая полуось
-    double e = ((r_a+r_p)/2*a);            // эсцентриситет орбиты
+    double n = 2 * PI / T;                 // СЃСЂРµРґРЅСЏСЏ СѓРіР»РѕРІР°СЏ СЃРєРѕСЂРѕСЃС‚СЊ 
+    double a = (r_a + r_p) / 2;              // Р±РѕР»СЊС€Р°СЏ РїРѕР»СѓРѕСЃСЊ 
+    double e = ((r_a - r_p) / (2 * a));            // СЌСЃС†РµРЅС‚СЂРёСЃРёС‚РµС‚ РѕСЂР±РёС‚С‹ 0,48793
 
-    //ofstream BUBA;
+
+    ofstream BUBA;
+        BUBA.open("value_for_graph.txt");
+
+    for (int t = 0; t <= T; t++) {         // t - РІСЂРµРјСЏ РїСЂРѕС…РѕР¶РґРµРЅРёСЏ РѕС‚ РїРµСЂРёС†РµРЅС‚СЂР°
+        BUBA << "t=" << t << endl;
+        double M = n * t;
+        double E_fixed_point = fixed_point_iteration(M, e);
+        double E_bisection = bisection_method(M, e);
+        double E_golden_section = golden_section_method(M, e);
+        double E_newton = newton_method(M, e);
+
+        BUBA << "E (Fixed Point Iteration): " << E_fixed_point << endl;
+        BUBA << "E (Bisection Method): " << E_bisection << endl;
+        BUBA << "E (Golden Section Method): " << E_golden_section << endl;
+        BUBA << "E (Newton Method): " << E_newton << endl;
+    }
+    
+
+    return 0;
+}
+
+
+ //ofstream BUBA;
     //BUBA.open("value_for_graph.txt");
 
-   /* for (int t = 0; t <= T; t++) {         // t - время прохождения от перицентра
+   /* for (int t = 0; t <= T; t++) {         // t - РІСЂРµРјСЏ РїСЂРѕС…РѕР¶РґРµРЅРёСЏ РѕС‚ РїРµСЂРёС†РµРЅС‚СЂР°
         BUBA << "t=" << t << endl;
         double M = n * t;
         double E_fixed_point = fixed_point_iteration(M, e);
@@ -134,25 +141,8 @@ int main()
         double E_golden_section = golden_section_method(M, e);
         double E_newton = newton_method(M, e);
         
-        BUBA << "E (Fixed Point Iteration): " << E_fixed_point << endl;
+        BUBA << "E (Fixed Point Iteration): " << E_fixed_point << СЉendl;
         BUBA << "E (Bisection Method): " << E_bisection << endl;
         BUBA << "E (Golden Section Method): " << E_golden_section << endl;
         BUBA << "E (Newton Method): " << E_newton << endl;
     }*/
-    for (int t = 0; t <= T; t++) {         // t - время прохождения от перицентра
-        cout << "t=" << t << endl;
-        double M = n * t;
-        double E_fixed_point = fixed_point_iteration(M, e);
-        double E_bisection = bisection_method(M, e);
-        double E_golden_section = golden_section_method(M, e);
-        double E_newton = newton_method(M, e);
-
-        cout << "E (Fixed Point Iteration): " << E_fixed_point << endl;
-        cout << "E (Bisection Method): " << E_bisection << endl;
-        cout << "E (Golden Section Method): " << E_golden_section << endl;
-        cout << "E (Newton Method): " << E_newton << endl;
-    }
-    
-
-    return 0;
-}
